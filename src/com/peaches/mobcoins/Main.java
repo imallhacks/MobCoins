@@ -19,7 +19,7 @@ import org.bukkit.plugin.PluginManager;
 import net.md_5.bungee.api.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
-class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener {
+public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener {
 	final HashMap<String, Integer> coins = new HashMap<>();
 
 	public Main(Main pl) {
@@ -81,6 +81,9 @@ class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener {
 				e1.printStackTrace();
 			}
 
+		}
+		if(!CoinsAPI.playerExists(p.getName())){
+			CoinsAPI.createPlayer(p.getName());
 		}
 	}
 

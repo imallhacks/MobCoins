@@ -37,7 +37,7 @@
    }
    
    public static boolean playerExists(String player) {
-     return plugin.coins.containsKey(player);
+     return !plugin.coins.containsKey(player);
    }
  }
 
