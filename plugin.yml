@@ -1,0 +1,8 @@
+name: Mobcoins
+version: 2.7
+description: This plugin adds Mobcoins to the game
+main: com.peaches.mobcoins.Main
+author: Peaches_MLG
+commands:
+  mobcoins:
+    aliases: [mc]

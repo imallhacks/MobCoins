@@ -1,0 +1,110 @@
+Options:
+  Prefix: '&7[&6MobCoins&7]'
+  Title: '&7[&6MobCoins - Shop&7]'
+Shop:
+  '0':
+    Item: CAKE
+    Meta: 0
+    Amount: 1
+    Slot: 14
+    DisplayName: '&b&lKingRank!'
+    Price: 100
+    Lore: ''
+    Commands:
+    - pex user %player% group set King
+  '1':
+    Item: CAKE
+    Meta: 0
+    Amount: 1
+    Slot: 13
+    DisplayName: '&b&lGuardianRank!'
+    Price: 100
+    Lore: ''
+    Commands:
+    - pex user %player% group set Guardian
+  '2':
+    Item: CAKE
+    Meta: 0
+    Amount: 1
+    Slot: 12
+    DisplayName: '&b&lAvengerRank!'
+    Price: 100
+    Lore: ''
+    Commands:
+    - pex user %player% group set Avenger
+  '3':
+    Item: TRIPWIRE_HOOK
+    Meta: 0
+    Amount: 1
+    Slot: 30
+    DisplayName: '&b&lMythical Crate Key!'
+    Price: 100
+    Lore: ''
+    Commands:
+    - add here
+  '4':
+    Item: TRIPWIRE_HOOK
+    Meta: 0
+    Amount: 1
+    Slot: 31
+    DisplayName: '&b&lCustom Enchant Crate Key!'
+    Price: 100
+    Lore: ''
+    Commands:
+    - add here
+  '5':
+    Item: TRIPWIRE_HOOK
+    Meta: 0
+    Amount: 1
+    Slot: 32
+    DisplayName: '&b&lLegendary Crate Key!'
+    Price: 100
+    Lore: ''
+    Commands:
+    - add here
+  '6':
+    Item: FEATHER
+    Meta: 0
+    Amount: 1
+    Slot: 40
+    DisplayName: '&b&lFly!'
+    Price: 100
+    Lore: ''
+    Commands:
+    - pex user %player% add ffly.fly
+  '7':
+    Item: GOLD_INGOT
+    Meta: 0
+    Amount: 1
+    Slot: 21
+    DisplayName: '&b&l20k!'
+    Price: 100
+    Lore: ''
+    Commands:
+    - eco give %player% 20000
+  '8':
+    Item: GOLD_INGOT
+    Meta: 0
+    Amount: 1
+    Slot: 22
+    DisplayName: '&b&l50k!'
+    Price: 100
+    Lore: ''
+    Commands:
+    - eco give %player% 50000
+  '9':
+    Item: GOLD_INGOT
+    Meta: 0
+    Amount: 1
+    Slot: 23
+    DisplayName: '&b&l100k!'
+    Price: 100
+    Lore: ''
+    Commands:
+    - eco give %player% 100000
+DropChances:
+  SKELETON: 5
+  ZOMBIE: 5
+  BLAZE: 5
+  CREEPER: 10
+  ENDERMAN: 10
