@@ -21,6 +21,10 @@ import net.md_5.bungee.api.ChatColor;
    {
      plugin = pl;
    }
+
+   public static int getChange(String Mob) {
+     return plugin.getConfig().getInt("DropChances."+Mob);
+   }
 	
 	public static Boolean hasenchant(String Enchant, ItemStack item) {
 		if(item.hasItemMeta()) {
@@ -35,6 +39,13 @@ import net.md_5.bungee.api.ChatColor;
 		}
 		return false;
 	}
+
+	public static Boolean hasmob(String Mob){
+     if(plugin.getConfig().contains("DropChances."+Mob)){
+       return true;
+     }
+     return false;
+    }
    
    public static int getenderman() {
      return plugin.getConfig().getInt("DropChances.ENDERMAN");

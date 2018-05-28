@@ -51,7 +51,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
         }
         //Plugin info
         Metrics metrics = new Metrics(this);
-        metrics.addCustomChart(new Metrics.SingleLineChart("players", () -> Bukkit.getServer().getOnlinePlayers().size()));
         System.out.print("-------------------------------");
         System.out.print("");
         System.out.print("MobCoins Enabled!");
