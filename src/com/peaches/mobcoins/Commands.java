@@ -160,6 +160,10 @@ class Commands implements CommandExecutor {
                             sender.sendMessage(Utils.getprefix() + ChatColor.GRAY + " Please Enter A Whole Number!");
                             return true;
                         }
+                        if(args[2].contains("-")){
+                            sender.sendMessage(Utils.getprefix() + ChatColor.GRAY + " Please Enter A Whole Number!");
+                            return true;
+                        }
                         if (CoinsAPI.getCoins(plcs) >= amount) {
                             CoinsAPI.addCoins(pl, amount);
                             CoinsAPI.removeCoins(plcs, amount);
