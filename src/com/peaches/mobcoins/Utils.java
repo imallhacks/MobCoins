@@ -41,10 +41,7 @@ import net.md_5.bungee.api.ChatColor;
 	}
 
 	public static Boolean hasmob(String Mob){
-     if(plugin.getConfig().contains("DropChances."+Mob)){
-       return true;
-     }
-     return false;
+      return plugin.getConfig().contains("DropChances." + Mob);
     }
    
    public static int getenderman() {
@@ -156,10 +153,6 @@ import net.md_5.bungee.api.ChatColor;
      return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Options.Prefix"));
    }
    
-   public static boolean hasAccount(Player p) {
-     return plugin.getConfig().contains("Players." + p.getUniqueId());
-   }
-   
    public static Inventory showInventory(@NotNull Player p) {
      Inventory inv = Bukkit.createInventory(null, 54, getTitle());
      inv.setItem(0, getBorder());
@@ -189,8 +182,31 @@ import net.md_5.bungee.api.ChatColor;
      inv.setItem(51, getBorder());
      inv.setItem(52, getBorder());
      inv.setItem(53, getBorder());
-     for (int i = 0; i < 28; i++) {
-       inv.setItem(getSlot(i), getItem(i, p));
+     for(String i : plugin.getConfig().getConfigurationSection("Shop").getKeys(false)){
+       int amount = plugin.getConfig().getInt("Shop."+i+".Amount");
+       String name = plugin.getConfig().getString("Shop."+i+".DisplayName");
+
+       int id = plugin.getConfig().getInt("Shop." + i + ".Meta");
+       ItemStack item = new ItemStack(
+               Material.getMaterial(plugin.getConfig()
+                       .getString("Shop." + i + ".Item").toUpperCase()),
+               amount, (short)id);
+       ItemMeta im = item.getItemMeta();
+       im.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+       ArrayList<String> lore = new ArrayList<>();
+       if (plugin.getConfig().contains("Shop." + i + ".Lore")) {
+         lore.add(ChatColor.translateAlternateColorCodes('&',
+                 plugin.getConfig().getString("Shop." + i + ".Lore")));
+       }
+       lore.add(ChatColor.GRAY + "Price: " +
+               plugin.getConfig().getInt("Shop." + i + ".Price"));
+
+
+
+       if (plugin.getConfig().getInt("Players." + p.getUniqueId() + ".Tokens") < plugin.getConfig().getInt("Shop." + i + ".Price"))
+         im.setLore(lore);
+       item.setItemMeta(im);
+       inv.setItem(plugin.getConfig().getInt("Shop."+i+".Slot"), item);
      }
      inv.setItem(0, getBorder());
      return inv;

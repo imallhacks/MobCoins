@@ -1,5 +1,8 @@
  package com.peaches.mobcoins;
- 
+
+ import org.bukkit.Bukkit;
+ import org.bukkit.entity.Player;
+
  class CoinsAPI implements org.bukkit.event.Listener {
    private static Main plugin;
    
@@ -15,6 +18,7 @@
    }
    
    public static void addCoins(String p, int coins) {
+     Player player = Bukkit.getPlayer(p);
      int c = getCoins(p);
      c += coins;
      plugin.coins.put(p, c);

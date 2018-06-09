@@ -28,6 +28,13 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
     public Main() {
         PluginDescriptionFile pdf = getDescription();
     }
+    //Shit to do
+    //Fix Bugs
+    //Fix Cringy code
+    // Customisable Messages
+    // Withdraw Command
+    // Placeholder API Support?
+    // Add other ways e.g. Mining killing Players ect
 
     public void onEnable() {
         getConfig().options().copyDefaults(true);

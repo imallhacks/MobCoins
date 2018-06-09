@@ -2,8 +2,6 @@ package com.peaches.mobcoins;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -11,54 +9,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.Random;
 
 class Events implements org.bukkit.event.Listener {
     private static Main plugin;
-    private final File CE = new File("plugins//CustomEnchants//config.yml");
-    private final YamlConfiguration CEConfig = YamlConfiguration.loadConfiguration(CE);
 
     public Events(Main pl) {
         plugin = pl;
-    }
-
-
-    private static String convertPower(int i) {
-        if (i <= 0) {
-            return "I";
-        }
-        if (i == 1) {
-            return "I";
-        }
-        if (i == 2) {
-            return "II";
-        }
-        if (i == 3) {
-            return "III";
-        }
-        if (i == 4) {
-            return "IV";
-        }
-        if (i == 5) {
-            return "V";
-        }
-        if (i == 6) {
-            return "VI";
-        }
-        if (i == 7) {
-            return "VII";
-        }
-        if (i == 8) {
-            return "VIII";
-        }
-        if (i == 9) {
-            return "IX";
-        }
-        if (i == 10) {
-            return "X";
-        }
-        return i + "";
     }
 
     @EventHandler
@@ -70,25 +27,27 @@ class Events implements org.bukkit.event.Listener {
 
     @EventHandler
     public void OnInvClick(@NotNull InventoryClickEvent e) {
-        if (e.getInventory().getTitle().equals(Utils.getTitle())) {
-            Player p = (Player) e.getWhoClicked();
-            for (int i = 0; i < 28; i++) {
-                if (e.getCurrentItem().equals(Utils.getItem(i, p))) {
-                    String player = p.getUniqueId().toString();
-                    if (CoinsAPI.getCoins(player) >= Utils.getPrice(i, p)) {
-                        p.closeInventory();
-                        CoinsAPI.removeCoins(player, Utils.getPrice(i, p));
-                        p.sendMessage(Utils.getprefix() + ChatColor.GRAY + " You Brought an Item From The Shop!");
-                        java.util.List<String> command = plugin.getConfig().getStringList("Shop." + i + ".Commands");
-                        for (String cmd : command) {
-                            org.bukkit.Bukkit.getServer().dispatchCommand(org.bukkit.Bukkit.getServer().getConsoleSender(), cmd.replace("%player%", e.getWhoClicked().getName()));
+        if (e.getInventory() != null) {
+            if (e.getInventory().getTitle().equals(Utils.getTitle())) {
+                Player p = (Player) e.getWhoClicked();
+                for (int i = 0; i < 28; i++) {
+                    if (e.getCurrentItem().equals(Utils.getItem(i, p))) {
+                        String player = p.getUniqueId().toString();
+                        if (CoinsAPI.getCoins(player) >= Utils.getPrice(i, p)) {
+                            p.closeInventory();
+                            CoinsAPI.removeCoins(player, Utils.getPrice(i, p));
+                            p.sendMessage(Utils.getprefix() + ChatColor.GRAY + " You Brought an Item From The Shop!");
+                            java.util.List<String> command = plugin.getConfig().getStringList("Shop." + i + ".Commands");
+                            for (String cmd : command) {
+                                org.bukkit.Bukkit.getServer().dispatchCommand(org.bukkit.Bukkit.getServer().getConsoleSender(), cmd.replace("%player%", e.getWhoClicked().getName()));
+                            }
+                        } else {
+                            p.closeInventory();
+                            p.sendMessage(Utils.getprefix() + ChatColor.GRAY + " You dont have enough Mobcoins!");
                         }
                     } else {
-                        p.closeInventory();
-                        p.sendMessage(Utils.getprefix() + ChatColor.GRAY + " You dont have enough Mobcoins!");
+                        e.setCancelled(true);
                     }
-                } else {
-                    e.setCancelled(true);
                 }
             }
         }
@@ -96,31 +55,26 @@ class Events implements org.bukkit.event.Listener {
 
     @EventHandler
     public void OnEntityDeath(@NotNull EntityDeathEvent e) {
-        if (Utils.hasmob(e.getEntityType().getName().toUpperCase())) {
-            Random object = new Random();
-            int i = 1 + object.nextInt(100);
-            if (i <= Utils.getChange(e.getEntityType().getName().toUpperCase())) {
-                Player p = e.getEntity().getKiller();
-                if (p == null) return;
-                String player = p.getUniqueId().toString();
-                if (p.getItemInHand() != null) {
-                    if (p.getItemInHand().hasItemMeta()) {
-                        if (p.getItemInHand().getItemMeta().hasLore()) {
-                            for (int counter1 = 1; counter1 <= CEConfig.getInt("MaxPower.Coins"); counter1++) {
-                                if (Utils.hasenchant("Coins " + convertPower(counter1), p.getItemInHand())) {
-                                    p.sendMessage(Utils.getprefix() + ChatColor.GRAY + " You Killed A "+e.getEntityType().getName()+" and Gained " + (counter1 + 1) + " Mobcoins!");
-                                    CoinsAPI.addCoins(player, counter1 + 1);
-                                    return;
-                                }
-                            }
+        if (e.getEntity().getKiller() != null) {
+            if (e.getEntityType() != null && e.getEntityType().getName() != null) {
+                if (Utils.hasmob(e.getEntityType().getName().toUpperCase())) {
+                    Random object = new Random();
+                    int i = 1 + object.nextInt(100);
+                    if (i <= Utils.getChange(e.getEntityType().getName().toUpperCase())) {
+                        Player p = e.getEntity().getKiller();
+                        if (p == null) return;
+                        String player = p.getUniqueId().toString();
+                        MobCoinsGiveEvent event = new MobCoinsGiveEvent(p, 1);
+                        Bukkit.getPluginManager().callEvent(event);
+                        if (event.getAmount() > 1) {
+                            p.sendMessage(Utils.getprefix() + ChatColor.GRAY + " You Killed A " + e.getEntityType().getName() + " and Gained " + event.getAmount() + " Mobcoins!");
+                        } else {
+                            p.sendMessage(Utils.getprefix() + ChatColor.GRAY + " You Killed A " + e.getEntityType().getName() + " and Gained " + event.getAmount() + " Mobcoin!");
                         }
+                        CoinsAPI.addCoins(player, event.getAmount());
                     }
                 }
-                p.sendMessage(Utils.getprefix() + ChatColor.GRAY + " You Killed A "+e.getEntityType().getName()+" and Gained 1 Mobcoin!");
-                CoinsAPI.addCoins(player, 1);
             }
-        }else{
-            Bukkit.broadcastMessage(e.getEntityType().getName());
         }
     }
 }

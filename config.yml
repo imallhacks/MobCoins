@@ -1,6 +1,6 @@
 Options:
-  Prefix: '&7[&6MobCoins&7]'
-  Title: '&7[&6MobCoins - Shop&7]'
+  Prefix: '&c&lMobCoins &7>>'
+  Title: '&c&lMobCoins'
 Shop:
   '0':
     Item: CAKE
