@@ -319,6 +319,38 @@ class Commands implements CommandExecutor {
                                 + ChatColor.translateAlternateColorCodes('&', this.messages.getString("NoPermission")));
                         return true;
                     }
+                        sender.sendMessage(ChatColor.GRAY + "-------------------[ " +
+                                ChatColor.RED+""+ChatColor.BOLD + "MobCoins Help " + ChatColor.GRAY +
+                                "]-------------------");
+                        sender.sendMessage(ChatColor.RED+""+ChatColor.BOLD + "/MobCoins " +
+                                ChatColor.DARK_GRAY + ": " + ChatColor.GRAY + "Opens The GUI");
+
+                        sender.sendMessage(ChatColor.RED+""+ChatColor.BOLD + "/MobCoins balance " +
+                                ChatColor.DARK_GRAY + ": " + ChatColor.GRAY +
+                                "Tells You You Balance");
+                        sender.sendMessage(ChatColor.RED+""+ChatColor.BOLD + "/MobCoins balance <Name> " +
+                                ChatColor.DARK_GRAY + ": " + ChatColor.GRAY +
+                                "Tells You You Balance of another player");
+                        sender.sendMessage(ChatColor.RED+""+ChatColor.BOLD + "/MobCoins reload " +
+                                ChatColor.DARK_GRAY + ": " + ChatColor.GRAY +
+                                "Reloads The Plugin");
+                        sender.sendMessage(ChatColor.RED+""+ChatColor.BOLD +
+                                "/MobCoins pay <name> <amount>" + ChatColor.DARK_GRAY + ": " +
+                                ChatColor.GRAY + "Pay a player");
+                        sender.sendMessage(ChatColor.RED+""+ChatColor.BOLD +
+                                "/MobCoins add <name> <amount>" + ChatColor.DARK_GRAY + ": " +
+                                ChatColor.GRAY + "Give a player MobCoins");
+                        sender.sendMessage(ChatColor.RED+""+ChatColor.BOLD +
+                                "/MobCoins set <name> <amount>" + ChatColor.DARK_GRAY + ": " +
+                                ChatColor.GRAY + "Set a players mobcoins");
+                        sender.sendMessage(ChatColor.RED+""+ChatColor.BOLD +
+                                "/MobCoins remove <name> <amount>" + ChatColor.DARK_GRAY + ": " +
+                                ChatColor.GRAY + "Remove a players MobCoins");
+                        sender.sendMessage(ChatColor.RED+""+ChatColor.BOLD + "/MobCoins help " +
+                                ChatColor.DARK_GRAY + ": " + ChatColor.GRAY +
+                                "View a helpful list of commands!");
+                        sender.sendMessage(ChatColor.GRAY +
+                                "-----------------------------------------------------");
                 }
             }
         }
