@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Random;
 
 class Events implements org.bukkit.event.Listener {
@@ -31,15 +32,15 @@ class Events implements org.bukkit.event.Listener {
             if (e.getInventory().getTitle().equals(Utils.getTitle())) {
                 Player p = (Player) e.getWhoClicked();
                 for (int i = 0; i < 28; i++) {
-                    if (e.getCurrentItem().equals(Utils.getItem(i, p))) {
+                    if (e.getCurrentItem().equals(Utils.getitem(i, p))) {
                         String player = p.getUniqueId().toString();
                         if (CoinsAPI.getCoins(player) >= Utils.getPrice(i, p)) {
                             p.closeInventory();
                             CoinsAPI.removeCoins(player, Utils.getPrice(i, p));
                             p.sendMessage(Utils.getprefix() + ChatColor.GRAY + " You Brought an Item From The Shop!");
-                            java.util.List<String> command = plugin.getConfig().getStringList("Shop." + i + ".Commands");
+                            List<String> command = plugin.getConfig().getStringList("Shop." + i + ".Commands");
                             for (String cmd : command) {
-                                org.bukkit.Bukkit.getServer().dispatchCommand(org.bukkit.Bukkit.getServer().getConsoleSender(), cmd.replace("%player%", e.getWhoClicked().getName()));
+                                Bukkit.getServer().dispatchCommand(org.bukkit.Bukkit.getServer().getConsoleSender(), cmd.replace("%player%", e.getWhoClicked().getName()));
                             }
                         } else {
                             p.closeInventory();

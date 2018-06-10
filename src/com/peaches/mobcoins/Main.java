@@ -31,7 +31,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
     //Shit to do
     //Fix Bugs
     //Fix Cringy code
-    // Customisable Messages
     // Withdraw Command
     // Placeholder API Support?
     // Add other ways e.g. Mining killing Players ect
@@ -43,6 +42,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
         getCommand("mobcoins").setExecutor(new Commands(this));
         registerEvents();
         createFile();
+        createMessages();
         loadBal();
         //Try to find an update
         try {
@@ -112,6 +112,59 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
             } catch (IOException ignored) {
             }
         }
+    }
+
+    private void createMessages() {
+
+        File msg = new File("plugins//MobCoins//Messages.yml");
+        YamlConfiguration messages = YamlConfiguration.loadConfiguration(msg);
+        if (!msg.exists()) {
+            try {
+                msg.createNewFile();
+            } catch (IOException ignored) {
+            }
+        }
+        if (messages.getString("StartReload") == null) {
+            messages.set("StartReload", "&7 Reloading Plugin...");
+        }
+        if (messages.getString("EndReload") == null) {
+            messages.set("EndReload", "&7 Reload Complete took %ms%ms.");
+        }
+        if (messages.getString("NoPermission") == null) {
+            messages.set("NoPermission", "&7 Insufficient Permission!");
+            if (messages.getString("Update") == null) {
+                messages.set("Update", "&7 A new update was found! Version: %version%!");
+            }
+            if (messages.getString("Amount") == null) {
+                messages.set("Amount", "&7 You have %amount% Mobcoins!");
+            }
+            if (messages.getString("PlayerAmount") == null) {
+                messages.set("Amount", "&7 %player% has %amount% Mobcoins!");
+            }
+            if (messages.getString("WholeNumber") == null) {
+                messages.set("Amount", "&7 please enter a whole number.");
+            }
+            if (messages.getString("InvalidPlayer") == null) {
+                messages.set("Amount", "&7 That player does not exist");
+            }
+            if (messages.getString("CantPayYourself") == null) {
+                messages.set("Amount", "&7 You can't pay yourself");
+            }
+            if (messages.getString("PaidPlayer") == null) {
+                messages.set("Amount", "&7 You paid %player% %amount% MobCoins");
+            }
+            if (messages.getString("YouWerePaid") == null) {
+                messages.set("Amount", "&7 You were paid %amount% MobCoins by %player%");
+            }
+            if (messages.getString("NoMobCoins") == null) {
+                messages.set("Amount", "&7 You do not have enough MobCoins");
+            }
+            try {
+                messages.save(msg);
+            } catch (IOException ignored) {
+            }
+        }
+
     }
 
     private void saveBal() {
