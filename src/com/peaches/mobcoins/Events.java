@@ -37,7 +37,7 @@ class Events implements org.bukkit.event.Listener {
                         if (CoinsAPI.getCoins(player) >= Utils.getPrice(i, p)) {
                             p.closeInventory();
                             CoinsAPI.removeCoins(player, Utils.getPrice(i, p));
-                            p.sendMessage(Utils.getprefix() + ChatColor.GRAY + " You Brought an Item From The Shop!");
+                            p.sendMessage(Utils.getprefix() + ChatColor.GRAY + " You Bought an Item From The Shop!");
                             List<String> command = plugin.getConfig().getStringList("Shop." + i + ".Commands");
                             for (String cmd : command) {
                                 Bukkit.getServer().dispatchCommand(org.bukkit.Bukkit.getServer().getConsoleSender(), cmd.replace("%player%", e.getWhoClicked().getName()));
